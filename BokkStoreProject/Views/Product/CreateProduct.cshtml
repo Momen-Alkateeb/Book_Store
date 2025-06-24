@@ -1,0 +1,151 @@
+﻿@model ProductVM
+
+<div class="container py-4">
+    <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
+        <div class="card-header bg-gradient bg-primary py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white mb-0"><i class="bi bi-plus-circle me-2"></i>Create Product</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4 p-md-5">
+            <form asp-controller="Product" asp-action="SaveNewProduct" enctype="multipart/form-data" class="row g-4">
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                <!-- Left Column -->
+                <div class="col-lg-8 pe-lg-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="products.Title" class="form-control" placeholder=" " />
+                                <label asp-for="products.Title"></label>
+                                <span asp-validation-for="products.Title" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="products.ISBN" class="form-control" placeholder=" " />
+                                <label asp-for="products.ISBN"></label>
+                                <span asp-validation-for="products.ISBN" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea asp-for="products.Description" class="form-control" style="height: 120px" placeholder=" "></textarea>
+                                <label asp-for="products.Description"></label>
+                                <span asp-validation-for="products.Description" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="products.Author" class="form-control" placeholder=" " />
+                                <label asp-for="products.Author"></label>
+                                <span asp-validation-for="products.Author" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="products.CategoryID" class="form-select">
+                                    <option value="">Select Category</option>
+                                    @foreach (var item in Model.Category)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                                <label asp-for="products.CategoryID"></label>
+                                <span asp-validation-for="products.CategoryID" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="products.ListPrice" class="form-control" placeholder="List Price" />
+                                <label asp-for="products.ListPrice"></label>
+                                <span asp-validation-for="products.ListPrice" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="products.Price" class="form-control" placeholder="Price" />
+                                <label asp-for="products.Price"></label>
+                                <span asp-validation-for="products.Price" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="products.Price100" class="form-control" placeholder="Price 100+" />
+                                <label asp-for="products.Price100"></label>
+                                <span asp-validation-for="products.Price100" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="products.Price50" class="form-control" placeholder="Price 100+" />
+                                <label asp-for="products.Price50"></label>
+                                <span asp-validation-for="products.Price50" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label fw-semibold">Product Image</label>
+                                <input type="file" name="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" onchange="previewImage(event)" />
+                                <small class="text-muted">Recommended size: 600x600px</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Image Preview -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <img id="productImagePreview" src="~/Images/noimage.png" alt="Image Preview"
+                                 class="img-fluid rounded mb-3 mx-auto"
+                                 style="max-height: 250px; width: auto; object-fit: contain;" />
+                            <h6 class="text-muted mb-0">Preview Product Image</h6>
+                            <small class="text-muted">Displayed before save</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="col-12 mt-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="bi bi-save me-2"></i>Create Product
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-action="Index" asp-controller="Product" class="btn btn-outline-secondary btn-lg w-100 py-3">
+                                <i class="bi bi-arrow-left me-2"></i>Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('productImagePreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

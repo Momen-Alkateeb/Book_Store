@@ -1,0 +1,94 @@
+﻿@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+        };
+        toastr.success('@TempData["Success"]', 'Success');
+    </script>
+}
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "7000", // Longer timeout for errors
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
+        };
+        toastr.error('@TempData["Error"]', 'Error');
+    </script>
+}
+
+<style>
+    /* Custom Toastr Styling */
+    #toast-container > .toast {
+        background-position: 20px center;
+        padding: 15px 20px 15px 60px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+
+    #toast-container > .toast-success {
+        background-color: #28a745;
+        border-left: 5px solid #218838;
+    }
+
+    #toast-container > .toast-error {
+        background-color: #dc3545;
+        border-left: 5px solid #c82333;
+    }
+
+    .toast-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .toast-message {
+        font-size: 14px;
+    }
+
+    .toast-close-button {
+        color: white;
+        opacity: 0.8;
+        font-size: 18px;
+    }
+
+    .toast-progress {
+        height: 3px;
+        opacity: 0.6;
+    }
+</style>

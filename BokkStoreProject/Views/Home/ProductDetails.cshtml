@@ -1,0 +1,100 @@
+﻿@model Product
+
+@if (TempData["Found"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        @TempData["Found"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to Product List
+        </a>
+    </div>
+}
+
+
+
+else{
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="product-image-container position-relative" style="height: 400px;">
+                    <img src="@Model.URL" onerror="this.onerror=null;this.src='/images/default.jpg';"
+                         alt="@Model.Title"
+                         class="img-fluid w-100 h-100 object-fit-cover">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+                <div class="card-body p-4">
+                    <h1 class="fw-bold mb-3">@Model.Title</h1>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 me-3">
+                            <i class="bi bi-check-circle-fill me-1"></i> @Model.category.Name
+                        </span>
+                        <span class="text-muted">
+                            <i class="bi bi-person me-1"></i> @Model.Author
+                        </span>
+                    </div>
+
+                    <h2 class="text-dark mb-4">$@Model.Price.ToString("0.00")</h2>
+
+                    <div class="mb-4">
+                        <h3 class="fw-bold mb-3">Description</h3>
+                        <div class="border-start border-3 ps-3">
+                            @Html.Raw(Model.Description)
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-5">
+                        <a asp-controller="Home" asp-action="Index"
+                           class="btn btn-outline-secondary flex-grow-1 py-2">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Products
+                        </a>
+                        <button class="btn btn-primary flex-grow-1 py-2" disabled>
+                            <i class="bi bi-credit-card me-2"></i>Pay Now (Coming Soon)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    <style>
+        .product-image-container {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .btn-primary[disabled] {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .border-start {
+            border-color: #dee2e6 !important;
+        }
+
+        .badge {
+            padding: 0.5em 0.75em;
+            font-size: 0.9rem;
+        }
+
+        /* Added for author text */
+        .text-muted {
+            font-size: 0.95rem;
+        }
+    </style>
+}

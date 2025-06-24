@@ -1,0 +1,104 @@
+﻿@model AddUserToRoleVM
+
+@{
+    ViewData["Title"] = "Register User in Role";
+}
+
+<div class="register-container bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">Register User and Assign Role</h2>
+            <p class="text-muted">Fill out the form below to add a new user and assign a role</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <form asp-action="SaveUsertToRole" asp-controller="Account" novalidate>
+                            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Name" class="form-control" placeholder="Name" />
+                                <label asp-for="Name">Full Name</label>
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Email" class="form-control" type="email" placeholder="Email" />
+                                <label asp-for="Email">Email Address</label>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Address" class="form-control" placeholder="Address" />
+                                <label asp-for="Address">Address</label>
+                                <span asp-validation-for="Address" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                                <label asp-for="Password">Password</label>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" />
+                                <label asp-for="ConfirmPassword">Confirm Password</label>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-5">
+                                <select asp-for="RoleName" class="form-select">
+                                    <option value="">--- Select Role ---</option>
+                                    @foreach (var role in ViewBag.Roles)
+                                    {
+                                        <option value="@role.Name">@role.Name</option>
+                                    }
+                                </select>
+                                <label asp-for="RoleName">Role</label>
+                                <span asp-validation-for="RoleName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="d-grid gap-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-person-plus me-2"></i> Register User
+                                </button>
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-arrow-left me-2"></i> Back to Home
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .register-container {
+            min-height: 100vh;
+        }
+
+        .card {
+            border-radius: 1rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 0.5rem;
+        }
+
+        .btn {
+            border-radius: 0.5rem;
+        }
+
+        label {
+            font-weight: 500;
+        }
+    </style>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

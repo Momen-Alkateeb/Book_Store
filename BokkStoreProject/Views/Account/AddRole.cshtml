@@ -1,0 +1,81 @@
+﻿@model AddRole
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-gradient bg-primary py-4">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h2 class="text-white mb-0 fw-bold">
+                        <i class="bi bi-person-plus me-2"></i>Create New Role
+                    </h2>
+                    <p class="text-white-50 mb-0 mt-1">Add a new role to your system</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-md-5 bg-light">
+            <form asp-controller="Account" asp-action="SaveRole"  class="row g-4 needs-validation" novalidate>
+                <div asp-validation-summary="All" class="alert alert-danger rounded-3 shadow-sm"></div>
+
+                <!-- Main Content -->
+                <div class="col-12">
+                    <div class="card bg-white rounded-3 shadow-sm mb-4">
+                        <div class="card-header bg-light py-3 border-bottom">
+                            <h5 class="mb-0 text-primary">
+                                <i class="bi bi-info-circle-fill me-2"></i>Role Information
+                            </h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row g-4">
+                                <div class="col-md-8">
+                                    <div class="form-floating">
+                                        <input asp-for="RoleName" class="form-control rounded-3"
+                                               placeholder=" " required />
+                                        <label asp-for="RoleName" class="text-muted">
+                                            <i class="bi bi-tag-fill me-2 text-primary"></i>Role Name
+                                        </label>
+                                        <span asp-validation-for="RoleName" class="text-danger small"></span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Footer -->
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/Home/Index" class="btn btn-outline-secondary rounded-pill px-4">
+                            <i class="bi bi-arrow-left me-2"></i>Back
+                        </a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <i class="bi bi-save-fill me-2"></i>Save Role
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Optional: Add some custom styling -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    }
+
+    .bg-gradient {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
+</style>

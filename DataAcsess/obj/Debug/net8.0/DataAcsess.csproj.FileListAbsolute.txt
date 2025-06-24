@@ -1,0 +1,5 @@
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\DataAcsess\obj\Debug\net8.0\DataAcsess.csproj.AssemblyReference.cache
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\DataAcsess\obj\Debug\net8.0\DataAcsess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\DataAcsess\obj\Debug\net8.0\DataAcsess.AssemblyInfoInputs.cache
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\DataAcsess\obj\Debug\net8.0\DataAcsess.AssemblyInfo.cs
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\DataAcsess\obj\Debug\net8.0\DataAcsess.csproj.CoreCompileInputs.cache

@@ -1,0 +1,4 @@
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\ProjectModels\obj\Debug\net8.0\ProjectModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\ProjectModels\obj\Debug\net8.0\ProjectModels.AssemblyInfoInputs.cache
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\ProjectModels\obj\Debug\net8.0\ProjectModels.AssemblyInfo.cs
+C:\Users\momen\OneDrive\Desktop\MVC_Projects\BokkStoreProject\ProjectModels\obj\Debug\net8.0\ProjectModels.csproj.CoreCompileInputs.cache

@@ -1,0 +1,93 @@
+﻿@model Category
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                <div class="card-header bg-primary bg-gradient py-3">
+                    <div class="row align-items-center">
+                        <div class="col-12 text-center">
+                            <h2 class="text-white mb-0">
+                                <i class="bi bi-pencil-square me-2"></i>Update Category
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-controller="Category" asp-action="SaveUpdateData" class="row g-3">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input asp-for="Id" class="form-control" readonly  />
+                                <label asp-for="Id" class="form-label"></label>
+                                <span asp-validation-for="Id" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input asp-for="Name" class="form-control" placeholder=" " />
+                                <label asp-for="Name" class="form-label"></label>
+                                <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input asp-for="DsiplayOrder" class="form-control" placeholder=" " />
+                                <label asp-for="DsiplayOrder" class="form-label"></label>
+                                <span asp-validation-for="DsiplayOrder" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary w-100 py-2">
+                                        <i class="bi bi-check-circle me-2"></i>Save Changes
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-action="Index" asp-controller="Category" class="btn btn-outline-secondary w-100 py-2">
+                                        <i class="bi bi-x-circle me-2"></i>Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .form-floating > label {
+        color: #6c757d;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        border-color: #86b7fe;
+    }
+
+    .form-control[readonly] {
+        background-color: #f8f9fa;
+    }
+
+    .rounded-4 {
+        border-radius: 0.8rem;
+    }
+
+    .card {
+        border: none;
+    }
+</style>

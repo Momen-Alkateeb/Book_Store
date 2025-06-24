@@ -1,0 +1,291 @@
+﻿@model List<Product>
+<partial name="_NotificationPartial" />
+
+<div class="container py-4">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2 class="text-primary mb-0">
+                <i class="bi bi-box-seam me-2"></i> Product Catalog
+            </h2>
+            <p class="text-muted mb-0 small">Manage your product inventory</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <a asp-controller="Product" asp-action="AddNewProduct" class="btn btn-primary rounded-pill shadow-sm">
+                <i class="bi bi-plus-circle me-2"></i> Add New Product
+            </a>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table id="productTable" class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 sortable" data-sort="Id">ID <i class="bi bi-arrow-down-up ms-1"></i></th>
+                            <th class="sortable" data-sort="Title">Product <i class="bi bi-arrow-down-up ms-1"></i></th>
+                            <th class="sortable" data-sort="ISBN">ISBN <i class="bi bi-arrow-down-up ms-1"></i></th>
+                            <th class="sortable" data-sort="Author">Author <i class="bi bi-arrow-down-up ms-1"></i></th>
+                            <th class="text-end">Prices</th>
+                            <th class="sortable" data-sort="Category">Category <i class="bi bi-arrow-down-up ms-1"></i></th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productBody">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="product-row">
+                                <td class="ps-4 fw-semibold">#@item.Id</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="product-image-container me-3">
+                                            <img src="@item.URL" onerror="this.onerror=null;this.src='/images/default.jpg';"
+                                                 alt="@item.Title"
+                                                 class="rounded shadow-sm product-image">
+                                        </div>
+                                        <span class="product-title">@item.Title</span>
+                                    </div>
+                                </td>
+                                <td>@item.ISBN</td>
+                                <td>@item.Author</td>
+                                <td class="text-end">
+                                    <div class="d-flex flex-column">
+                                        <span class="text-nowrap">$@item.ListPrice.ToString("0.00") <small class="text-muted">List</small></span>
+                                        <span class="text-nowrap">$@item.Price.ToString("0.00") <small class="text-muted">Regular</small></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25">@item.category.Name</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <a asp-action="UpdateProduct" asp-controller="Product" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-primary rounded-circle mx-1 action-btn"
+                                           title="Edit" data-bs-toggle="tooltip">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-danger rounded-circle mx-1 action-btn"
+                                           title="Delete" data-bs-toggle="tooltip">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top">
+                <div class="text-muted small">
+                    Showing <span id="showingCount">1-5</span> of <span id="totalCount">@Model.Count</span> products
+                </div>
+                <nav>
+                    <ul id="pagination" class="pagination pagination-sm mb-0"></ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    <style>
+        .product-image-container {
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-row:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-title {
+            transition: color 0.2s ease;
+        }
+
+        .product-row:hover .product-title {
+            color: #0d6efd;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+            .action-btn:hover {
+                transform: translateY(-2px);
+            }
+
+        .quick-view-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        .sortable {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+            .sortable:hover {
+                background-color: rgba(0,0,0,0.03);
+            }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .rounded-3 {
+            border-radius: 0.75rem !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Pagination setup
+            const rowsPerPage = 5;
+            let currentPage = 1;
+            let tableRows = $('#productBody tr');
+            let totalRows = tableRows.length;
+
+            function updateShowingCount() {
+                let start = (currentPage - 1) * rowsPerPage + 1;
+                let end = Math.min(start + rowsPerPage - 1, totalRows);
+                $('#showingCount').text(`${start}-${end}`);
+            }
+
+            function paginate() {
+                tableRows.hide();
+                let totalPages = Math.ceil(totalRows / rowsPerPage);
+
+                $('#pagination').empty();
+
+                // Previous button
+                $('#pagination').append(
+                    `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>`
+                );
+
+                // Page numbers
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, currentPage + 2);
+
+                if (startPage > 1) {
+                    $('#pagination').append('<li class="page-item disabled"><a class="page-link" href="#">...</a></li>');
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    $('#pagination').append(
+                        `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#">${i}</a>
+                        </li>`
+                    );
+                }
+
+                if (endPage < totalPages) {
+                    $('#pagination').append('<li class="page-item disabled"><a class="page-link" href="#">...</a></li>');
+                }
+
+                // Next button
+                $('#pagination').append(
+                    `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>`
+                );
+
+                let start = (currentPage - 1) * rowsPerPage;
+                let end = start + rowsPerPage;
+                tableRows.slice(start, end).fadeIn(200);
+
+                updateShowingCount();
+            }
+
+            // Pagination click handler
+            $(document).on('click', '.page-link', function (e) {
+                e.preventDefault();
+                const text = $(this).text().trim();
+
+                if (text === '«') {
+                    if (currentPage > 1) currentPage--;
+                } else if (text === '»') {
+                    if (currentPage < Math.ceil(totalRows / rowsPerPage)) currentPage++;
+                } else if (!isNaN(text)) {
+                    currentPage = parseInt(text);
+                }
+
+                paginate();
+            });
+
+            // Sorting functionality
+            $('.sortable').on('click', function () {
+                const key = $(this).data('sort');
+                const $icon = $(this).find('i');
+                const isAsc = $icon.hasClass('bi-arrow-up');
+
+                // Reset all sort icons
+                $('.sortable i').removeClass('bi-arrow-up bi-arrow-down').addClass('bi-arrow-down-up');
+
+                // Set new sort direction
+                $icon.removeClass('bi-arrow-down-up')
+                    .addClass(isAsc ? 'bi-arrow-down' : 'bi-arrow-up');
+
+                const rows = $('#productBody tr').get();
+
+                rows.sort((a, b) => {
+                    const valA = $(a).find('td').eq($(this).index()).text().trim().toLowerCase();
+                    const valB = $(b).find('td').eq($(this).index()).text().trim().toLowerCase();
+
+                    // Special handling for numeric values
+                    if (key === 'Id' || key === 'Price') {
+                        return isAsc ?
+                            parseFloat(valA.replace('#', '')) - parseFloat(valB.replace('#', '')) :
+                            parseFloat(valB.replace('#', '')) - parseFloat(valA.replace('#', ''));
+                    }
+
+                    return isAsc ?
+                        valA.localeCompare(valB) :
+                        valB.localeCompare(valA);
+                });
+
+                $('#productBody').empty().append(rows);
+                currentPage = 1;
+                paginate();
+            });
+
+         
+
+            // Initialize
+            updateShowingCount();
+            paginate();
+        });
+    </script>
+}

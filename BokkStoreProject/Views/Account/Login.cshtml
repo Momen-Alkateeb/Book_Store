@@ -1,0 +1,118 @@
+﻿@model LoginVm
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="register-container">
+    <!-- Header Section Matching Navbar -->
+    <div class="register-header bg-primary text-white py-3">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="mb-1">Welcome to <strong>BookStore</strong></h2>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="text-center mb-0 py-2">Login Account</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form asp-action="SaveLogin" asp-controller = "Account" novalidate>
+                            <div class="text-danger" asp-validation-summary="All" ></div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input asp-for="Name" class="form-control" placeholder="First Name" required />
+                                        <label asp-for="Name">First Name</label>
+                                        <span asp-validation-for="Name" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                 
+
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="Password" class="form-control" placeholder="Password" type="password" />
+                                    <label asp-for="Password">Password</label>
+                                    <span asp-validation-for="Password" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                          
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary py-2">
+                                    <i class="bi bi-person-plus me-2"></i> Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center py-3">
+                        <div class="small">
+                            No have an account? <a asp-action="Register" asp-controller="Account" class="text-decoration-none">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <style>
+        .register-container {
+            padding-top: 1rem;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 56px - 72px); /* Account for navbar and footer */
+        }
+
+        .register-header {
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .form-control {
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+        }
+
+        .form-floating > label {
+            padding: 0.75rem;
+        }
+
+        .btn-primary {
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+            .btn-primary:hover {
+                opacity: 0.9;
+                transform: translateY(-1px);
+            }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+    </style>
+}
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+   
+}
