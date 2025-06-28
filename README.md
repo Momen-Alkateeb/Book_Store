@@ -7,8 +7,7 @@ An ASP.NET Core MVC web application for managing and browsing books. This projec
 - ASP.NET Core MVC  
 - Entity Framework Core  
 - C#  
-- SQL Server  
-- Razor Views  
+- SQL Server   
 - Bootstrap 5 (for styling)
 
 ## 📦 Features
