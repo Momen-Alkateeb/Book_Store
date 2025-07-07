@@ -53,13 +53,8 @@ An ASP.NET Core MVC web application for managing and browsing books. This projec
 6. Open your browser and visit: `http://localhost:5000`
 
    
-## 👨‍💻 Author
+## 👨‍💻 Developer
+- Name: Momen Omar Alkateeb
+- Degree: B.Sc. in Computer Engineering – Tafila Technical University
 
-**Momen Alkateeb**  
-GitHub: [Momen-Alkateeb](https://github.com/Momen-Alkateeb)  
-A passionate backend developer focused on ASP.NET Core, clean architecture, and building practical web applications.
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
 
